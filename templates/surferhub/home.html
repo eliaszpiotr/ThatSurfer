@@ -1,0 +1,72 @@
+{% extends 'surferhub/base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Join Section -->
+    <section class="text-center py-5">
+        <h1>Welcome to ThatSurfer!</h1>
+        <p>Discover the best surfing spots and connect with the community.</p>
+        {% if user.is_authenticated == None %}
+        <a href="{% url 'register' %}" class="btn btn-outline-dark">Join Now</a>
+        {% endif %}
+    </section>
+
+    <!-- Connect Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Left - Text Content -->
+                <div class="col-md-6">
+                    <h2>Connect with Others</h2>
+                    <p>At ThatSurfer, we're more than just about finding the perfect wave. We're about connecting
+                        surfers from all over the world, fostering a community that shares experiences, tips, and the
+                        thrill of the ride.</p>
+                    <a href="#" class="btn btn-outline-dark">Find More</a>
+                </div>
+
+                <!-- Right - Image -->
+                <div class="col-md-6">
+                    <img src="{% static 'images/connect_image.jpg' %}" alt="Surfers Connecting" class="img-fluid w-75">
+                </div>
+            </div>
+        </div>
+    </section>
+
+{#    <!-- Map Section -->#}
+{#    <section>#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-12 my-3">#}
+{#                    <h1>Surf spots around the world!</h1>#}
+{#                    <div id="map" class="map-container rounded my-4" style="height: 500px;"></div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var mapElement = document.querySelector('#map');
+        var map = L.map(mapElement, {
+            worldCopyJump: true,
+            maxBounds: [[-90, -180], [90, 180]]
+        });
+
+        map.setView([0, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        {% for spot in spots %}
+            var marker = L.marker([{{ spot.latitude }}, {{ spot.longitude }}]).addTo(map);
+            marker.bindPopup('<b>{{ spot.name }}</b>');
+            marker.on('click', function () {
+                this.openPopup();
+            });
+        {% endfor %}
+    </script>
+{% endblock %}

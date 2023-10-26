@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 .env
 .idea/
+media/profile_pictures/*
+!media/profile_pictures/def.jpeg
 # C extensions
 *.so
 

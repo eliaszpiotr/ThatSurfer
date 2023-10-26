@@ -20,6 +20,6 @@ from surferhub import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('surferhub.urls')), # Connecting the urls from the surferhub app
-    path('accounts/', include('allauth.urls')), # Connecting the urls from the allauth app
+    path('', include('surferhub.urls')),  # Connecting the urls from the surferhub app
+    path('accounts/', include('allauth.urls')),  # Connecting the urls from the allauth app
 ]

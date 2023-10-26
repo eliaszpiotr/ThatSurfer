@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,12 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # added apps
-    'surferhub.apps.SurferhubConfig'
+    'surferhub.apps.SurferhubConfig',
     'widget_tweaks',
     'leaflet',
     'allauth',
     'allauth.account',
 ]
+
+AUTH_USER_MODEL = 'surferhub.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'ThatSurfer.urls'
